@@ -3,39 +3,26 @@ const cors = require("cors");
 const db = require("./db");
 
 const app = express();
-app.use(cors({
-  origin: [
-    'http://localhost:4200',
-    'http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}));
 
-app.use(express.json());
-
+// ---- CORS CONFIG (must be placed BEFORE routes) ----
 const corsOptions = {
   origin: [
-    'http://localhost:4200',
-    'http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com',
-    'https://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com'
+    "http://localhost:4200",
+    "http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com",
+    "https://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com"
   ],
   credentials: true,
-  methods: "GET,POST,PUT,DELETE,OPTIONS",
-  allowedHeaders: "Content-Type,Authorization"
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions));           // enable CORS
+app.options("*", cors(corsOptions));  // enable preflight OPTIONS
 
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
+// ---- Body Parser ----
+app.use(express.json());
 
-
-// Routes
+// ---- Routes ----
 app.use("/auth", require("./routes/auth"));
 app.use("/events", require("./routes/events"));
 app.use("/attendees", require("./routes/attendees"));
@@ -43,5 +30,6 @@ app.use("/tasks", require("./routes/tasks"));
 app.use("/search", require("./routes/search"));
 app.use("/invitations", require("./routes/invitations"));
 
+// ---- Server Listen ----
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
