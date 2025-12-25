@@ -4,22 +4,21 @@ const db = require("./db");
 
 const app = express();
 
-// ---- CORS CONFIG ----
 const corsOptions = {
   origin: [
     "http://localhost:4200",
-    "http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com",
     "http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization", "Accept"]
 };
 
-app.use(cors(corsOptions)); // handles OPTIONS preflight automatically
+// Apply CORS
+app.use(cors(corsOptions));
 
-// ---- Body Parser ----
-app.use(express.json());
+// Handle OPTIONS preflight for all routes
+app.options("*", cors(corsOptions));
 
 // ---- Routes ----
 app.use("/auth", require("./routes/auth"));
