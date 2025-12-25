@@ -4,7 +4,7 @@ const db = require("./db");
 
 const app = express();
 
-// ---- CORS CONFIG (must be placed BEFORE routes) ----
+// ---- CORS CONFIG ----
 const corsOptions = {
   origin: [
     "http://localhost:4200",
@@ -16,8 +16,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"]
 };
 
-app.use(cors(corsOptions));           // enable CORS
-app.options("*", cors(corsOptions));  // enable preflight OPTIONS
+app.use(cors(corsOptions)); // handles OPTIONS preflight automatically
 
 // ---- Body Parser ----
 app.use(express.json());
