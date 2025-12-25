@@ -9,7 +9,7 @@ const corsOptions = {
   origin: [
     "http://localhost:4200",
     "http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com",
-    "https://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com"
+    "http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
