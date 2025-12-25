@@ -14,11 +14,8 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization", "Accept"]
 };
 
-// Apply CORS
-app.use(cors(corsOptions));
-
-// Handle OPTIONS preflight for all routes
-app.options("*", cors(corsOptions));
+app.use(cors(corsOptions)); // handles OPTIONS preflight automatically
+app.use(express.json());
 
 // ---- Routes ----
 app.use("/auth", require("./routes/auth"));
