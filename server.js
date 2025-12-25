@@ -14,6 +14,21 @@ app.use(cors({
 
 app.use(express.json());
 
+const corsOptions = {
+  origin: [
+    'http://localhost:4200',
+    'http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com',
+    'https://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
+// Must allow browser OPTIONS preflight
+app.options('*', cors(corsOptions));
 // Routes
 app.use("/auth", require("./routes/auth"));
 app.use("/events", require("./routes/events"));
