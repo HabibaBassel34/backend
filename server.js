@@ -20,15 +20,21 @@ const corsOptions = {
     'http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com',
     'https://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  methods: "GET,POST,PUT,DELETE,OPTIONS",
+  allowedHeaders: "Content-Type,Authorization"
 };
 
 app.use(cors(corsOptions));
 
-// Must allow browser OPTIONS preflight
-app.options('*', cors(corsOptions));
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+
 // Routes
 app.use("/auth", require("./routes/auth"));
 app.use("/events", require("./routes/events"));
