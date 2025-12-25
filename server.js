@@ -4,7 +4,10 @@ const db = require("./db");
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: [
+    'http://localhost:4200',
+    'http://frontend-habiba34-dev.apps.rm3.7wse.p1.openshiftapps.com'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
